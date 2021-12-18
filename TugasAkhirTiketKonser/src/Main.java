@@ -32,10 +32,11 @@ public class Main {
                     "2.Login \n" +
                     "Pilih Menu Anda: ");
             String login = input.readLine().trim();
-            if (login.equals("1")) {
+            if (login.equals("1")){
                 System.out.println("===== REGISTRASI AKUN =====");
                 createCustomer();
-            } else if (login.equals("2")) {
+            }
+            else if (login.equals("2")){
                 ResultSet viewcustomer = customerModel.getCustomer();
                 System.out.println("===== LOGIN AKUN =====");
                 System.out.print("Username: ");
@@ -58,15 +59,25 @@ public class Main {
                                         "Pilih opsi menu: ");
                                 String opsi = input.readLine().trim();
 
+                                if(){
+                                    switch (opsi) {
+                                        case "1":
+                                            viewTiket();
+                                    }
+                                }
+
+
                             }
-                        } else {
+                        }
+                        else {
                             cek = "fail";
                         }
                     }
-                } else {
+                }
+                else {
                     System.out.println("Silahkan registrasi terlebih dahulu");
                 }
-                if (cek.equals("fail")) {
+                if (cek.equals("fail")){
                     System.out.println("Gagal Login");
                 }
                 System.out.println("Program Selesai");
@@ -96,5 +107,16 @@ public class Main {
             System.out.println("Berhasil update " + result + " baris");
         }
     }
+    public static void viewTiket () throws SQLException {
+        ResultSet viewtiket = ticketModel.gettiket();
+        System.out.println("IDTiket         Nama Event          Harga   Stok");
+        while (viewtiket.next()) {
+            System.out.printf("%-4s | %10s | %5d | %3d %n", viewtiket.getString("ticketId"),
+                    viewtiket.getString("namaevent"),
+                    viewtiket.getInt("harga"),
+                    (viewtiket.getInt("stok")));
+        }
 
+    }
+}
 }

@@ -12,5 +12,7 @@ public class Order_Model extends Base_Model{
     static InputStreamReader inputStreamReader = new InputStreamReader(System.in);
     static BufferedReader input = new BufferedReader(inputStreamReader);
     public Order_Model() throws SQLException {
+        super();
     }
+
 }
