@@ -58,11 +58,34 @@ public class Main {
                                         "6. Keluar Sistem dan Cetak Nota \n" +
                                         "Pilih opsi menu: ");
                                 String opsi = input.readLine().trim();
-
-                                if(){
+                                if (opsi.equals("6")){
+                                    System.out.println("Metode Pembayaran Via:");
+                                    String bayar = input.readLine().trim();
+                                    viewOrder();
+                                    viewTotal();
+                                    System.out.println("Pembayaran Via: " + bayar);
+                                    break;
+                                }
+                                else{
                                     switch (opsi) {
                                         case "1":
                                             viewTiket();
+                                            break;
+                                        case "2":
+                                            orderModel.addOrder(viewcustomer.getInt("customerId"), tanggal);
+                                            break;
+                                        case "3":
+                                            viewOrder();
+                                            break;
+                                        case "4":
+                                            orderModel.delOrder();
+                                            break;
+                                        case "5":
+                                            viewTotal();
+                                            break;
+                                        default:
+                                            System.out.println("Menu Tidak Tersedia");
+                                            break;
                                     }
                                 }
 
@@ -118,5 +141,27 @@ public class Main {
         }
 
     }
-}
+    public static void viewOrder() throws SQLException, IOException{
+        ResultSet vieworder = orderModel.getOrderDetail();
+        System.out.println("===== KERANJANG TIKET ANDA =====");
+        System.out.println("Nomor Pesanan   ID Tiket   Jumlah  Subtotal");
+        while (vieworder.next()) {
+            System.out.printf("%-13s | %8s | %5d | %3d %n", vieworder.getInt("orderId"),
+                    vieworder.getString("ticketId"),
+                    vieworder.getInt("jumlah"),
+                    vieworder.getInt("subtotal"));
+        }
+    }
+    public static void viewTotal() throws SQLException, IOException {
+        System.out.println("Nomor pesanan: ");
+        int id = Integer.parseInt(input.readLine());
+        ResultSet vieworder = orderModel.getOrderTotal(id);
+        int count = 0;
+        while(vieworder.next()){
+            count += vieworder.getInt("subtotal");
+        }
+        System.out.println("Total keranjang adalah Rp " + count);
+
+    }
+
 }
